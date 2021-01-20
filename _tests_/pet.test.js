@@ -28,6 +28,12 @@ describe('constructor', () => {
 
         expect(pet.fitness).toEqual(10);
     });
+
+    it('has an initial children value of an empty array', () => {
+        const pet = new Pet('Fido');
+
+        expect(pet.children).toEqual(expect.arrayContaining([]));
+    });
 });
 
 describe('growUp', () => {
@@ -175,4 +181,39 @@ describe('isAlive', () => {
         expect(pet.isAlive).toBe(true);
     });
 });
-  
+
+describe('adoptChild', () => {
+    
+    it('Adds the child to the children array of the parent', () => {
+        const parent = new Pet('Fido');
+        const child = new Pet('Amelia');
+		parent.adoptChild(child);	
+
+        expect(parent.children[0]).toBe(child);
+    });
+
+    it('can access any parameter of the child through the child variable', () => {
+        const parent = new Pet('Fido');
+        const child = new Pet('Amelia');
+		parent.adoptChild(child);	
+
+        expect(parent.children[0].name).toEqual('Amelia');
+    });
+});
+
+describe('haveBaby', () => {
+    
+    it('creates an instance of pet as a child of the parent', () => {
+        const parent = new Pet('Fido');
+		parent.haveBaby('Amelia');	
+
+        expect(parent.children[0]).toBeInstanceOf(Pet);
+    });
+
+    it('sets the parameter passed to the method as the name of the child', () => {
+        const parent = new Pet('Fido');
+        parent.haveBaby('Amelia');
+
+        expect(parent.children[0].name).toEqual('Amelia');
+    });
+});
